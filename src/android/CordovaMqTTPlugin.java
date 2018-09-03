@@ -120,6 +120,18 @@ public class CordovaMqTTPlugin extends CordovaPlugin {
             }
             connOpts.setCleanSession(cleanSess);
             connOpts.setKeepAliveInterval(ka);
+            SSLContext s = null;
+			try {
+				s = SSLContext.getInstance("SSL");
+				// 初始化SSLContext实例
+				s.init(null, new TrustManager[]{x509m},
+						new java.security.SecureRandom());
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			} catch (KeyManagementException e) {
+				e.printStackTrace();
+			}
+			connOpts.setSocketFactory(s.getSocketFactory());
             Log.i("mqttalabs", "username " + uname +" . Password is " + pass);
 
             client = new MqttAsyncClient(url, cid, persistence);
