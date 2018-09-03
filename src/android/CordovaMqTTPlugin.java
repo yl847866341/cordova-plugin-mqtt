@@ -129,6 +129,23 @@ public class CordovaMqTTPlugin extends CordovaPlugin {
             }
             connOpts.setCleanSession(cleanSess);
             connOpts.setKeepAliveInterval(ka);
+			X509TrustManager x509m = new X509TrustManager() {
+
+				@Override
+				public X509Certificate[] getAcceptedIssuers() {
+					return null;
+				}
+
+				@Override
+				public void checkServerTrusted(X509Certificate[] chain,
+								   String authType) throws CertificateException {
+				}
+
+				@Override
+				public void checkClientTrusted(X509Certificate[] chain,
+								   String authType) throws CertificateException {
+				}
+			};
             SSLContext s = null;
 			try {
 				s = SSLContext.getInstance("SSL");
